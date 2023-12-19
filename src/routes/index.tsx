@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import Divisor from "~/components/divisor";
 
 import Counter from "~/components/starter/counter/counter";
 import Hero from "~/components/starter/hero/hero";
@@ -62,6 +63,8 @@ export default component$(() => {
               <a href="/demo/todolist">Todo App</a>.
             </p>
           </Infobox>
+
+          <Divisor />
 
           <Infobox>
             <div q:slot="title" class="icon icon-community">
