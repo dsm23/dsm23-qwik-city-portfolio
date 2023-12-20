@@ -3,12 +3,18 @@
 }
 
 .hamburger .line {
-  transition: y 150ms ease-in 150ms, rotate 150ms ease-in, opacity 0ms 150ms;
+  transition:
+    y 150ms ease-in 150ms,
+    rotate 150ms ease-in,
+    opacity 0ms 150ms;
   transform-origin: center;
 }
 
 .hamburger.open .line {
-  transition: y 150ms ease-in, rotate 150ms ease-in 150ms, opacity 0ms 150ms;
+  transition:
+    y 150ms ease-in,
+    rotate 150ms ease-in 150ms,
+    opacity 0ms 150ms;
 }
 
 .hamburger.open :is(.top, .bottom) {
