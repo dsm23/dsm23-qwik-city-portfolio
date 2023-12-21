@@ -3,7 +3,7 @@ pull_request_rules:
   - name: automatic approval
     conditions:
       - author=dsm23
-      - check-success=build/build
+      - check-success=build (21.5.0)
     actions:
       review:
         type: APPROVE
