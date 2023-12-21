@@ -6,7 +6,7 @@ interface Props extends HTMLAttributes<HTMLElement> {
 }
 
 const Main = component$<Props>((props) => (
-  <main {...props} class={["mt-20 dark:text-white lg:mt-0", props.class]}>
+  <main {...props} class={["mt-20 lg:mt-0 dark:text-white", props.class]}>
     <Slot />
   </main>
 ));
