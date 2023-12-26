@@ -4,7 +4,7 @@ import type { ClassList, HTMLAttributes } from "@builder.io/qwik";
 import styles from "./styles.module.css";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  class: ClassList;
+  class?: ClassList;
 }
 
 const Tooltip = component$<Props>((props) => (

@@ -1,8 +1,12 @@
-import { component$, useComputed$ } from "@builder.io/qwik";
+import {
+  component$,
+  Resource,
+  useComputed$,
+  useResource$,
+} from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { Divisor } from "~/components";
-import { Interests } from "~/components/sections";
+import { Divisor, Interests, Skills } from "~/components";
 import { getHomePageQuery } from "~/utils/api";
 
 export const useHomeQuery = routeLoader$(async () => {
@@ -10,10 +14,30 @@ export const useHomeQuery = routeLoader$(async () => {
   return await getHomePageQuery();
 });
 
+const fetchSvg = async (url: string) => {
+  const res = await fetch(url, {
+    headers: new Headers({
+      Accept: "image/svg+xml",
+    }),
+  });
+
+  return await res.text();
+};
+
 export default component$(() => {
   const signal = useHomeQuery();
 
   const interests = useComputed$(() => signal.value.interests);
+  // const skills = useComputed$(() => signal.value.skills);
+
+  const skills = useResource$(async () => {
+    const promises = signal.value.skills.map(async (skill: any) => ({
+      ...skill,
+      svg: await fetchSvg(skill.icon!.url),
+    }));
+
+    return await Promise.all(promises);
+  });
 
   return (
     <>
@@ -32,6 +56,12 @@ export default component$(() => {
           <Divisor />
         </div>
         <Interests interests={interests.value} />
+        <Divisor />
+        <Resource
+          value={skills}
+          onPending={() => <div>Loading...</div>}
+          onResolved={(data) => <Skills skills={data} />}
+        />
       </div>
     </>
   );
