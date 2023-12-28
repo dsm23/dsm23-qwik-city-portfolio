@@ -7,6 +7,7 @@ import {
 import { routeLoader$ } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { Divisor, Interests, Skills } from "~/components";
+import type { Maybe, Skill } from "~/generated/generated";
 import { getHomePageQuery } from "~/utils/api";
 
 export const useHomeQuery = routeLoader$(async () => {
@@ -28,13 +29,16 @@ export default component$(() => {
   const signal = useHomeQuery();
 
   const interests = useComputed$(() => signal.value.interests);
-  // const skills = useComputed$(() => signal.value.skills);
 
   const skills = useResource$(async () => {
-    const promises = signal.value.skills.map(async (skill: any) => ({
-      ...skill,
-      svg: await fetchSvg(skill.icon!.url),
-    }));
+    const promises =
+      signal.value.skills?.map(
+        async (skill) =>
+          ({
+            ...skill,
+            svg: await fetchSvg(skill?.icon?.url as string),
+          }) as Maybe<Skill & { svg: string }>,
+      ) ?? [];
 
     return await Promise.all(promises);
   });
