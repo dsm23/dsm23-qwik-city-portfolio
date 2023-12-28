@@ -13,7 +13,7 @@ export default component$(() => {
 
   const signal = useSkill();
 
-  const rating = useComputed$<number>(() => signal.value.rating);
+  const rating = useComputed$(() => signal.value.rating);
 
   return (
     <Main class="w-full px-6 py-8">
@@ -30,14 +30,14 @@ export default component$(() => {
         <h2 class="tracking-widest text-sky-600">PROFICIENCY:</h2>
 
         {Array.from(
-          { length: rating.value },
+          { length: rating.value ?? 0 },
           (_, i) => `${loc.params.skill}-${i}`,
         ).map((val) => (
           <FilledStar key={val} />
         ))}
 
         {Array.from(
-          { length: 5 - rating.value },
+          { length: 5 - (rating.value ?? 0) },
           (_, i) => `${loc.params.skill}-${i}`,
         ).map((val) => (
           <EmptyStar key={val} />

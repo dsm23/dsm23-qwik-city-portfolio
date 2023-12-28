@@ -1,5 +1,16 @@
-// TODO: type this file
-// @ts-nocheck
+import type {
+  Asset,
+  AssetCollection,
+  EducationSchoolCollection,
+  InterestsCollection,
+  Maybe,
+  Person,
+  Query,
+  QueryAssetArgs,
+  Skill,
+  SkillFilter,
+} from "~/generated/generated";
+
 const POST_GRAPHQL_FIELDS = `
   content {
     json
@@ -21,7 +32,7 @@ const POST_GRAPHQL_FIELDS = `
   slug
 `;
 
-async function fetchGraphQL(query: string, preview = false) {
+async function fetchGraphQL<T>(query: string, preview = false) {
   return fetch(
     `https://graphql.contentful.com/content/v1/spaces/${
       import.meta.env.PUBLIC_CONTENTFUL_SPACE_ID
@@ -38,55 +49,56 @@ async function fetchGraphQL(query: string, preview = false) {
       },
       body: JSON.stringify({ query }),
     },
-  ).then((response) => response.json());
+  ).then((response) => response.json() as T);
 }
 
-function extractAsset(fetchResponse) {
-  return fetchResponse?.data?.asset;
+function extractAsset(fetchResponse: Maybe<{ data?: Query }>) {
+  return fetchResponse?.data?.asset as Asset;
 }
 
-function extractAssetEntries(fetchResponse) {
-  return fetchResponse?.data?.assetCollection?.items;
+function extractAssetEntries(fetchResponse: Maybe<{ data?: Query }>) {
+  return fetchResponse?.data?.assetCollection
+    ?.items as AssetCollection["items"];
 }
 
-function extractEducation(fetchResponse) {
-  return fetchResponse?.data?.educationSchoolCollection?.items;
+function extractEducation(fetchResponse: Maybe<{ data?: Query }>) {
+  return fetchResponse?.data?.educationSchoolCollection
+    ?.items as EducationSchoolCollection["items"];
 }
 
-function extractInterests(fetchResponse) {
-  return fetchResponse?.data?.interestsCollection?.items;
+function extractInterests(fetchResponse: Maybe<{ data?: Query }>) {
+  return fetchResponse?.data?.interestsCollection
+    ?.items as InterestsCollection["items"];
 }
 
-function extractSkill(fetchResponse) {
-  return fetchResponse?.data?.skillCollection?.items?.[0];
+function extractSkill(fetchResponse: Maybe<{ data?: Query }>) {
+  return fetchResponse?.data?.skillCollection?.items[0] as Skill;
 }
 
-function extractProfilePic(fetchResponse) {
-  return fetchResponse?.data?.personCollection?.items?.[0];
+function extractProfilePic(fetchResponse: Maybe<{ data?: Query }>) {
+  return fetchResponse?.data?.personCollection?.items[0] as Person;
 }
 
-function extractHomePage(fetchResponse) {
+function extractHomePage(fetchResponse: Maybe<{ data?: Query }>) {
   const {
     educationSchoolCollection,
     experienceCompanyCollection,
     interestsCollection,
     personCollection,
     skillCollection,
-    // TODO: remove this eslint disable
-    // eslint-disable-next-line
-  } = fetchResponse?.data;
+  } = fetchResponse?.data as Query;
 
   return {
     education: educationSchoolCollection?.items,
     experience: experienceCompanyCollection?.items,
     interests: interestsCollection?.items,
-    person: personCollection?.items?.[0],
+    person: personCollection?.items[0],
     skills: skillCollection?.items,
   };
 }
 
 export const getAllAssetsWithSlug = async () => {
-  const entries = await fetchGraphQL(
+  const entries = await fetchGraphQL<{ data?: Query }>(
     `query {
       assetCollection(where: { slug_exists: true }, order: date_DESC) {
         items {
@@ -106,8 +118,8 @@ export const getAllAssetsWithSlug = async () => {
   return extractAssetEntries(entries);
 };
 
-export const getAsset = async (assetId) => {
-  const entry = await fetchGraphQL(
+export const getAsset = async (assetId: QueryAssetArgs["id"]) => {
+  const entry = await fetchGraphQL<{ data?: Query }>(
     `query {
       asset(id: "${assetId}") {
         title
@@ -125,8 +137,8 @@ export const getAsset = async (assetId) => {
   return extractAsset(entry);
 };
 
-export const getSkillBySlug = async (slug: string) => {
-  const entry = await fetchGraphQL(
+export const getSkillBySlug = async (slug: SkillFilter["slug"]) => {
+  const entry = await fetchGraphQL<{ data?: Query }>(
     `query {
       skillCollection(where: { slug: "${slug}" }, limit: 1) {
         items {
@@ -145,7 +157,7 @@ export const getSkillBySlug = async (slug: string) => {
 };
 
 export const getEducation = async () => {
-  const entry = await fetchGraphQL(
+  const entry = await fetchGraphQL<{ data?: Query }>(
     `query {
       educationSchoolCollection {
         items {
@@ -164,7 +176,7 @@ export const getEducation = async () => {
 };
 
 export const getInterests = async () => {
-  const entry = await fetchGraphQL(
+  const entry = await fetchGraphQL<{ data?: Query }>(
     `query {
       interestsCollection {
         items {
@@ -178,7 +190,7 @@ export const getInterests = async () => {
 };
 
 export const getProfilePic = async () => {
-  const entry = await fetchGraphQL(
+  const entry = await fetchGraphQL<{ data?: Query }>(
     `query {
       personCollection {
         items {
@@ -197,7 +209,7 @@ export const getProfilePic = async () => {
 };
 
 export const getHomePageQuery = async () => {
-  const entry = await fetchGraphQL(
+  const entry = await fetchGraphQL<{ data?: Query }>(
     `query {
       personCollection {
         items {
