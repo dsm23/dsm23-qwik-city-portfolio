@@ -2,6 +2,8 @@ import { component$, useComputed$ } from "@builder.io/qwik";
 import { routeLoader$, useLocation } from "@builder.io/qwik-city";
 import { EmptyStar, FilledStar, Main, StyledGoBack } from "~/components";
 import { getSkillBySlug } from "~/utils/api";
+import contentfulOptions from "~/utils/content-options";
+import { documentToQwikComponents } from "~/utils/rich-text-qwik-renderer";
 
 export const useSkill = routeLoader$(async (requestEvent) => {
   // This code runs only on the server, after every navigation
@@ -13,6 +15,7 @@ export default component$(() => {
 
   const signal = useSkill();
 
+  const content = useComputed$(() => signal.value.content);
   const rating = useComputed$(() => signal.value.rating);
 
   return (
@@ -21,9 +24,7 @@ export default component$(() => {
 
       <h1 class="text-4xl text-sky-700">{loc.params.skill}</h1>
       <div class="mb-4">
-        {/* {documentToSolidComponents(content()?.json, contentfulOptions)} */}
-        {loc.params.skill}
-        <pre>{JSON.stringify(signal.value, null, 2)}</pre>
+        {documentToQwikComponents(content.value?.json, contentfulOptions)}
       </div>
 
       <div class="flex">
@@ -33,14 +34,14 @@ export default component$(() => {
           { length: rating.value ?? 0 },
           (_, i) => `${loc.params.skill}-${i}`,
         ).map((val) => (
-          <FilledStar key={val} />
+          <FilledStar key={`filled-${val}`} />
         ))}
 
         {Array.from(
           { length: 5 - (rating.value ?? 0) },
           (_, i) => `${loc.params.skill}-${i}`,
         ).map((val) => (
-          <EmptyStar key={val} />
+          <EmptyStar key={`empty-${val}`} />
         ))}
       </div>
     </Main>
