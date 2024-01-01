@@ -6,7 +6,7 @@ import {
 } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { Divisor, Interests, Skills } from "~/components";
+import { Divisor, Home, Interests, Skills } from "~/components";
 import type { Maybe, Skill } from "~/generated/generated";
 import { getHomePageQuery } from "~/utils/api";
 
@@ -28,6 +28,7 @@ const fetchSvg = async (url: string) => {
 export default component$(() => {
   const signal = useHomeQuery();
 
+  const author = useComputed$(() => signal.value.person);
   const interests = useComputed$(() => signal.value.interests);
 
   const skills = useResource$(async () => {
@@ -56,9 +57,9 @@ export default component$(() => {
       </div>
 
       <div class="container-flex container">
-        <div>
-          <Divisor />
-        </div>
+        <Home author={author.value} />
+        <Divisor />
+
         <Interests interests={interests.value} />
         <Divisor />
         <Resource
