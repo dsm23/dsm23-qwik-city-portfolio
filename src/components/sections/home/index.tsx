@@ -85,6 +85,16 @@ const Home = component$<Props>(({ author, ...props }) => {
           Solid Start portfolio
           <ArrowTopRightOnSquare class="h-4 w-4" aria-hidden="true" />
         </a>
+        <a
+          href="https://dsm23-nuxt-portfolio.netlify.app/"
+          class="flex transform items-center justify-center gap-x-2 rounded-full bg-gray-900 p-2 px-4 text-white transition duration-500 ease-in-out hover:scale-110 hover:bg-sky-900"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Solid aria-hidden="true" />
+          Nuxt portfolio
+          <ArrowTopRightOnSquare class="h-4 w-4" aria-hidden="true" />
+        </a>
       </div>
     </Section>
   );
