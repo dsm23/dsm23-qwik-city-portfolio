@@ -4,8 +4,8 @@ export function appendKeyToValidElement(
   element: QwikJSX.Element,
   key: number,
 ): QwikJSX.Element {
-  // eslint-disable-next-line no-prototype-builtins
-  if (element.hasOwnProperty("key")) {
+  if (Object.prototype.hasOwnProperty.call(element, "key")) {
+    // @ts-ignore
     element.key = `${element.type}-${key}`;
   }
 
