@@ -62,7 +62,7 @@ const Divisor = component$<Props>((props) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 260 50"
-      class={["w-full text-sky-200 print:hidden lg:px-28", props.class]}
+      class={["w-full text-sky-200 lg:px-28 print:hidden", props.class]}
       stroke="currentColor"
     >
       <path
