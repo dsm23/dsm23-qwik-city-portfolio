@@ -6,7 +6,7 @@ import {
 } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { Divisor, Home, Interests, Skills } from "~/components";
+import { Divisor, Home, Interests, Main, Skills } from "~/components";
 import type { Maybe, Skill } from "~/generated/generated";
 import { getHomePageQuery } from "~/utils/api";
 
@@ -45,7 +45,7 @@ export default component$(() => {
   });
 
   return (
-    <>
+    <Main class="w-full px-6 py-8">
       <div role="presentation" class="ellipsis"></div>
       <div role="presentation" class="ellipsis ellipsis-purple"></div>
 
@@ -68,7 +68,7 @@ export default component$(() => {
           onResolved={(data) => <Skills skills={data} />}
         />
       </div>
-    </>
+    </Main>
   );
 });
 
