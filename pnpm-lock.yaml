@@ -34,6 +34,9 @@ devDependencies:
   '@headlessui/react':
     specifier: ^1.7.18
     version: 1.7.18(react-dom@18.2.0)(react@18.2.0)
+  '@netlify/edge-functions':
+    specifier: ^2.0.0
+    version: 2.5.1
   '@total-typescript/ts-reset':
     specifier: ^0.5.1
     version: 0.5.1
@@ -2012,6 +2015,10 @@ packages:
       vfile: 6.0.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@netlify/edge-functions@2.5.1:
+    resolution: {integrity: sha512-6YGlbzxPaSqc/D2LhP4T4PXrim/vRmqpO1RwQKqVod6WCWlkdtJcAd3mGoI7efrjfND8twh7TqXtL7RRCI23qA==}
     dev: true
 
   /@next/env@14.2.1:
