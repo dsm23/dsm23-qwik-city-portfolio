@@ -76,7 +76,9 @@ function extractSkill(fetchResponse: Maybe<{ data?: Query }>) {
 }
 
 function extractProfilePic(fetchResponse: Maybe<{ data?: Query }>) {
-  return fetchResponse?.data?.personCollection?.items[0] as Person;
+  return fetchResponse?.data?.personCollection?.items[0] as Person & {
+    image: Asset & { src: string; srcset: string };
+  };
 }
 
 function extractHomePage(fetchResponse: Maybe<{ data?: Query }>) {
@@ -198,7 +200,12 @@ export const getProfilePic = async () => {
             height
             width
             description
-            url
+            srcset:url(
+              transform: {width: 192, height: 192, resizeStrategy: FILL, resizeFocus: FACE, cornerRadius: -1, format: WEBP, quality: 90}
+            )
+            src:url(
+              transform: {width: 192, height: 192, resizeStrategy: FILL, resizeFocus: FACE, cornerRadius: -1, format: JPG, quality: 90}
+            )
           }
         }
       }
