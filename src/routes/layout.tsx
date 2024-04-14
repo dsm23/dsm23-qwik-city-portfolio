@@ -1,11 +1,9 @@
-import { $, component$, Slot, useSignal, useStyles$ } from "@builder.io/qwik";
+import { $, component$, Slot, useSignal } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import type { RequestHandler } from "@builder.io/qwik-city";
+import { twMerge } from "tailwind-merge";
 import Nav from "~/components/nav";
 import { getProfilePic } from "~/utils/api";
-
-import styles from "./styles.css?inline";
-import { twMerge } from "tailwind-merge";
 
 import fooStyles from "./styles.module.css";
 
@@ -42,8 +40,6 @@ const items = [
 ];
 
 export default component$(() => {
-  useStyles$(styles);
-
   const profilePic = useProfilePic();
 
   const open = useSignal(false);

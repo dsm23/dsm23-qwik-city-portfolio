@@ -46,28 +46,18 @@ export default component$(() => {
 
   return (
     <Main class="w-full px-6 py-8">
-      <div role="presentation" class="ellipsis"></div>
-      <div role="presentation" class="ellipsis ellipsis-purple"></div>
+      <h1 class="sr-only">David Murdoch{"'"}s Portfolio</h1>
 
-      <div class="container-center container-spacing-xl container">
-        <h3>
-          You can <span class="highlight">count</span>
-          <br /> on me
-        </h3>
-      </div>
+      <Home author={author.value} />
 
-      <div class="container-flex container">
-        <Home author={author.value} />
-        <Divisor />
-
-        <Interests interests={interests.value} />
-        <Divisor />
-        <Resource
-          value={skills}
-          onPending={() => <div>Loading...</div>}
-          onResolved={(data) => <Skills skills={data} />}
-        />
-      </div>
+      <Divisor />
+      <Resource
+        value={skills}
+        onPending={() => <div>Loading...</div>}
+        onResolved={(data) => <Skills skills={data} />}
+      />
+      <Divisor />
+      <Interests interests={interests.value} />
     </Main>
   );
 });
