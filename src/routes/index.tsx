@@ -8,6 +8,7 @@ import { routeLoader$ } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { Divisor, Home, Interests, Main, Skills } from "~/components";
 import Education from "~/components/sections/education";
+import Experience from "~/components/sections/experience";
 import type { Maybe, Skill } from "~/generated/generated";
 import { getHomePageQuery } from "~/utils/api";
 
@@ -31,6 +32,7 @@ export default component$(() => {
 
   const author = useComputed$(() => signal.value.person);
   const education = useComputed$(() => signal.value.education);
+  const experience = useComputed$(() => signal.value.experience);
   const interests = useComputed$(() => signal.value.interests);
 
   const skills = useResource$(async () => {
@@ -51,6 +53,9 @@ export default component$(() => {
       <h1 class="sr-only">David Murdoch{"'"}s Portfolio</h1>
 
       <Home author={author.value} />
+
+      <Divisor />
+      <Experience experience={experience.value} />
 
       <Divisor />
       <Education education={education.value} />
