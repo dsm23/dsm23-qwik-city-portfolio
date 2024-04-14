@@ -7,6 +7,7 @@ import {
 import { routeLoader$ } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { Divisor, Home, Interests, Main, Skills } from "~/components";
+import Education from "~/components/sections/education";
 import type { Maybe, Skill } from "~/generated/generated";
 import { getHomePageQuery } from "~/utils/api";
 
@@ -29,6 +30,7 @@ export default component$(() => {
   const signal = useHomeQuery();
 
   const author = useComputed$(() => signal.value.person);
+  const education = useComputed$(() => signal.value.education);
   const interests = useComputed$(() => signal.value.interests);
 
   const skills = useResource$(async () => {
@@ -49,6 +51,9 @@ export default component$(() => {
       <h1 class="sr-only">David Murdoch{"'"}s Portfolio</h1>
 
       <Home author={author.value} />
+
+      <Divisor />
+      <Education education={education.value} />
 
       <Divisor />
       <Resource
