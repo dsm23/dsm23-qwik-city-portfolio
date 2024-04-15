@@ -7,6 +7,7 @@ import {
 import { routeLoader$ } from "@builder.io/qwik-city";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { Divisor, Home, Interests, Main, Skills } from "~/components";
+import Download from "~/components/sections/download";
 import Education from "~/components/sections/education";
 import Experience from "~/components/sections/experience";
 import type { Maybe, Skill } from "~/generated/generated";
@@ -68,6 +69,9 @@ export default component$(() => {
       />
       <Divisor />
       <Interests interests={interests.value} />
+
+      <Divisor />
+      <Download />
     </Main>
   );
 });
